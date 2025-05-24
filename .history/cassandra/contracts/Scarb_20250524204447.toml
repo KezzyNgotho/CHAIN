@@ -1,0 +1,17 @@
+[package]
+name = "prediction_market"
+version = "0.1.0"
+edition = "2023_01"
+
+[dependencies]
+starknet = ">=2.3.1"
+array = ">=0.1.0"
+zeroable = ">=0.1.0"
+box = ">=0.1.0"
+option = ">=0.1.0"
+traits = ">=0.1.0"
+integer = ">=0.1.0"
+
+[[target.starknet-contract]]
+sierra = true
+casm = true 

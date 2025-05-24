@@ -1,0 +1,10 @@
+^C:\USERS\KEZIE\DESKTOP\CHAIN\BUILD\_DEPS\NUGET-SUBBUILD\CMAKEFILES\BD2A9B64E567CA6E33661A00D25D3906\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/kezie/Desktop/CHAIN/build/_deps/nuget-subbuild -BC:/Users/kezie/Desktop/CHAIN/build/_deps/nuget-subbuild --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/kezie/Desktop/CHAIN/build/_deps/nuget-subbuild/nuget-populate.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

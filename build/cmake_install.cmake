@@ -42,6 +42,11 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Users/kezie/Desktop/CHAIN/build/runner/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/kezie/Desktop/CHAIN/build/plugins/audioplayers_windows/cmake_install.cmake")
+endif()
+
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
@@ -147,6 +152,40 @@ endif()
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+     "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug/audioplayers_windows_plugin.dll")
+    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug" TYPE FILE FILES "C:/Users/kezie/Desktop/CHAIN/build/plugins/audioplayers_windows/Debug/audioplayers_windows_plugin.dll")
+  elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
+    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+     "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/audioplayers_windows_plugin.dll")
+    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile" TYPE FILE FILES "C:/Users/kezie/Desktop/CHAIN/build/plugins/audioplayers_windows/Profile/audioplayers_windows_plugin.dll")
+  elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
+    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+     "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/audioplayers_windows_plugin.dll")
+    if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+    if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+        message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+    endif()
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release" TYPE FILE FILES "C:/Users/kezie/Desktop/CHAIN/build/plugins/audioplayers_windows/Release/audioplayers_windows_plugin.dll")
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMPONENT)
+  if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
+    list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug/")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
@@ -154,7 +193,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMP
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build/native_assets/windows/")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug" TYPE DIRECTORY FILES "/build/native_assets/windows/")
   elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/")
@@ -164,7 +203,7 @@ file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug" TYPE 
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build/native_assets/windows/")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile" TYPE DIRECTORY FILES "/build/native_assets/windows/")
   elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/")
@@ -174,7 +213,7 @@ file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile" TYP
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build/native_assets/windows/")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release" TYPE DIRECTORY FILES "/build/native_assets/windows/")
   endif()
 endif()
 
@@ -204,7 +243,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMP
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug/data" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build//flutter_assets")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug/data" TYPE DIRECTORY FILES "/build//flutter_assets")
   elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data/flutter_assets")
@@ -214,7 +253,7 @@ file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Debug/data" 
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build//flutter_assets")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data" TYPE DIRECTORY FILES "/build//flutter_assets")
   elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data/flutter_assets")
@@ -224,7 +263,7 @@ file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data" TYPE DIRECTORY FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build//flutter_assets")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data" TYPE DIRECTORY FILES "/build//flutter_assets")
   endif()
 endif()
 
@@ -238,7 +277,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xRuntimex" OR NOT CMAKE_INSTALL_COMP
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data" TYPE FILE FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build/windows/app.so")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data" TYPE FILE FILES "/build/windows/app.so")
   elseif("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
      "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data/app.so")
@@ -248,7 +287,7 @@ file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Profile/data
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
         message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data" TYPE FILE FILES "C:/Users/kezie/Desktop/CHAIN/cassandra/build/windows/app.so")
+file(INSTALL DESTINATION "C:/Users/kezie/Desktop/CHAIN/build/runner/Release/data" TYPE FILE FILES "/build/windows/app.so")
   endif()
 endif()
 

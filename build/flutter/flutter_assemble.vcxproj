@@ -88,7 +88,7 @@
     <CustomBuild Include="C:\Users\kezie\Desktop\CHAIN\build\CMakeFiles\13b2f28f20cade3a78655f3d8ffcb0eb\flutter_windows.dll.rule">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">Generating C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.dll, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_export.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_messenger.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_plugin_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_texture_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/core_implementations.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/standard_codec.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/plugin_registrar.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_engine.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_view_controller.cc, _phony_</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">setlocal
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\kezie\flutter PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_ROOT=C:\Users\kezie\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_TARGET=C:\Users\kezie\Desktop\CHAIN\cassandra\lib\main.dart DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\kezie\Desktop\CHAIN\cassandra\.dart_tool\package_config.json C:/Users/kezie/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env /packages/flutter_tools/bin/tool_backend.bat windows-x64 Debug
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -102,7 +102,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</VerifyInputsAndOutputsExist>
       <Message Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">Generating C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.dll, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_export.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_messenger.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_plugin_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_texture_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/core_implementations.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/standard_codec.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/plugin_registrar.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_engine.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_view_controller.cc, _phony_</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">setlocal
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\kezie\flutter PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_ROOT=C:\Users\kezie\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_TARGET=C:\Users\kezie\Desktop\CHAIN\cassandra\lib\main.dart DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\kezie\Desktop\CHAIN\cassandra\.dart_tool\package_config.json C:/Users/kezie/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Profile
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env /packages/flutter_tools/bin/tool_backend.bat windows-x64 Profile
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -116,7 +116,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">false</VerifyInputsAndOutputsExist>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'">Generating C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.dll, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_export.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_windows.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_messenger.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_plugin_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/flutter_texture_registrar.h, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/core_implementations.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/standard_codec.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/plugin_registrar.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_engine.cc, C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/ephemeral/cpp_client_wrapper/flutter_view_controller.cc, _phony_</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|win32'">setlocal
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\kezie\flutter PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_ROOT=C:\Users\kezie\flutter FLUTTER_EPHEMERAL_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral PROJECT_DIR=C:\Users\kezie\Desktop\CHAIN\cassandra FLUTTER_TARGET=C:\Users\kezie\Desktop\CHAIN\cassandra\lib\main.dart DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=false PACKAGE_CONFIG=C:\Users\kezie\Desktop\CHAIN\cassandra\.dart_tool\package_config.json C:/Users/kezie/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Release
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env /packages/flutter_tools/bin/tool_backend.bat windows-x64 Release
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -183,7 +183,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral\generated_config.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Users\kezie\Desktop\CHAIN\build\flutter\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">Building Custom Rule C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/CMakeLists.txt</Message>
@@ -196,7 +196,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral\generated_config.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">C:\Users\kezie\Desktop\CHAIN\build\flutter\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Profile|win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'">Building Custom Rule C:/Users/kezie/Desktop/CHAIN/cassandra/windows/flutter/CMakeLists.txt</Message>
@@ -209,7 +209,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Users\kezie\Desktop\CHAIN\cassandra\windows\flutter\ephemeral\generated_config.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Users\kezie\Desktop\CHAIN\build\flutter\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkObjects>
     </CustomBuild>

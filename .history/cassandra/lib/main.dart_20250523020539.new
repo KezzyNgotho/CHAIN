@@ -1,0 +1,145 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+import 'package:flutter/services.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'widgets/comment_modal.dart';
+import 'widgets/explore_modal.dart';
+import 'widgets/search_modal.dart';
+import 'widgets/following_modal.dart';
+import 'widgets/live_modal.dart';
+import 'widgets/prediction_card.dart';
+import 'screens/profile_screen.dart';
+import 'screens/splash_screen.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cassandra',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: SplashScreen(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool isDarkMode = false;
+  bool isFollowing = false;
+  bool isLive = false;
+  bool isExplore = false;
+  bool isSearch = false;
+  bool isComment = false;
+  bool isProfile = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cassandra'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                isSearch = !isSearch;
+              });
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.explore),
+            onPressed: () {
+              setState(() {
+                isExplore = !isExplore;
+              });
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.live_tv),
+            onPressed: () {
+              setState(() {
+                isLive = !isLive;
+              });
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              setState(() {
+                isProfile = !isProfile;
+              });
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (isSearch)
+              SearchModal(),
+            if (isExplore)
+              ExploreModal(),
+            if (isLive)
+              LiveModal(),
+            if (isProfile)
+              ProfileScreen(),
+            if (!isSearch && !isExplore && !isLive && !isProfile)
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return PredictionCard(
+                    predictionText: 'Prediction $index',
+                    predictionImage: 'assets/images/prediction$index.jpg',
+                    predictionDate: DateTime.now(),
+                    predictionTime: Duration(hours: 2),
+                    predictionPrice: 100.0,
+                    predictionDescription: 'Description for prediction $index',
+                    predictionCategory: 'Category $index',
+                    predictionTags: ['tag1', 'tag2', 'tag3'],
+                    predictionComments: ['Comment 1', 'Comment 2', 'Comment 3'],
+                    predictionLikes: 100,
+                    predictionShares: 50,
+                    predictionViews: 1000,
+                    predictionRating: 4.5,
+                    predictionRatingCount: 100,
+                    predictionRatingAverage: 4.5,
+                    predictionRatingMax: 5,
+                    predictionRatingMin: 1,
+                    predictionRatingTotal: 500,
+                    predictionRatingPercentage: 90,
+                    predictionRatingPercentageTotal: 100,
+                    predictionRatingPercentageMax: 100,
+                    predictionRatingPercentageMin: 0,
+                    predictionRatingPercentageAverage: 90,
+                    predictionRatingPercentageAverageTotal: 100,
+                  );
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+} 

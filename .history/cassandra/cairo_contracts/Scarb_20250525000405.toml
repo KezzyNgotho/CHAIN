@@ -1,0 +1,36 @@
+[package]
+name = "cairo_contracts"
+version = "0.1.0"
+edition = "2024_07"
+
+[dependencies]
+//starknet = ">=2
+starknet = ">=2.8.2" # Ensure you have a starknet dependency as well
+openzeppelin_token = "2.0.0-alpha.1" # Or the latest version
+openzeppelin_access = "2.0.0-alpha.1" # Or the latest version
+
+[dev-dependencies]
+snforge_std = ">=0.11.0"
+assert_macros = ">=2.3.1"
+
+[[target.starknet-contract]]
+sierra = true
+# If you use external contracts or libraries, add them here:
+# build-external-contracts = [
+#   "external_crate::contract_name"
+# ]
+
+[scripts]
+test = "snforge test"
+
+[tool.scarb]
+allow-prebuilt-plugins = ["snforge_std"]
+
+# Optional: Configure snforge test runner behavior
+# [tool.snforge]
+# exit_first = true
+
+# Optional: Add profiles for different environments (dev, testnet, mainnet)
+# [profile.dev]
+# [profile.testnet]
+# [profile.mainnet]

@@ -137,6 +137,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\kezie\Desktop\CHAIN\build\plugins\audioplayers_windows\audioplayers_windows_plugin.vcxproj">
+      <Project>{853FD433-4DCD-387C-AE94-430138D41AAE}</Project>
+      <Name>audioplayers_windows_plugin</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\kezie\Desktop\CHAIN\build\runner\cassandra.vcxproj">
       <Project>{740C18FE-AEF1-37FE-BFA4-1CF8AD5750C3}</Project>
       <Name>cassandra</Name>

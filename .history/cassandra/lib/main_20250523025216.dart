@@ -1,0 +1,2221 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+import 'package:flutter/services.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'widgets/comment_modal.dart';
+import 'widgets/explore_modal.dart';
+import 'widgets/search_modal.dart';
+import 'widgets/following_modal.dart';
+import 'widgets/live_modal.dart';
+import 'widgets/neon_splash_screen.dart';
+import 'widgets/feed_card.dart';
+import 'widgets/stake_modal.dart';
+
+enum AppTheme {
+  classicDark,
+  classicLight,
+  neon,
+  aqua,
+  sunset,
+  violet,
+  blush,
+  mint,
+  nightlife,
+}
+
+ThemeData getThemeData(AppTheme theme) {
+  return ThemeData(
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: const Color(0xFF111111),
+    primaryColor: const Color(0xFF9B5CFF),
+    colorScheme: ColorScheme.dark(
+      primary: const Color(0xFF9B5CFF),
+      secondary: const Color(0xFF7DF9FF),
+      background: const Color(0xFF111111),
+      surface: const Color(0xFF181A1A),
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      onBackground: Colors.white,
+      onSurface: Colors.white,
+      tertiary: const Color(0xFF00FFF7),
+      error: const Color(0xFFFF2D55),
+    ),
+    textTheme: GoogleFonts.interTextTheme(
+      ThemeData.dark().textTheme.copyWith(
+        headlineLarge: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          letterSpacing: 1.2,
+        ),
+        headlineMedium: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          letterSpacing: 1.1,
+        ),
+        titleLarge: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        titleMedium: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        bodyLarge: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        bodyMedium: const TextStyle(fontSize: 14, color: Colors.white70),
+        bodySmall: const TextStyle(fontSize: 12, color: Colors.white54),
+        labelLarge: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF00FFF7),
+        ),
+        labelMedium: const TextStyle(fontSize: 12, color: Color(0xFF00FFF7)),
+      ),
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF0A0A12),
+      elevation: 0,
+      iconTheme: IconThemeData(color: Colors.white),
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      ),
+    ),
+    cardTheme: CardTheme(
+      color: const Color(0xFF181A1A),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.white.withOpacity(0.06), width: 1),
+      ),
+    ),
+    dialogTheme: DialogTheme(
+      backgroundColor: const Color(0xFF181A1A),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 0,
+      titleTextStyle: GoogleFonts.poppins(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      contentTextStyle: GoogleFonts.poppins(
+        fontSize: 16,
+        color: Colors.white70,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF00FFF7),
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+        elevation: 0,
+        textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: const Color(0xFF00FFF7),
+        side: const BorderSide(color: Color(0xFF00FFF7), width: 1.7),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 28),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: const Color(0xFF181A1A),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFF7DF9FF), width: 1.4),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFF7DF9FF), width: 1.4),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFF00FFF7), width: 2.2),
+      ),
+      hintStyle: const TextStyle(color: Colors.white38, fontSize: 15),
+      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+    ),
+    iconTheme: const IconThemeData(color: Color(0xFF00FFF7)),
+    dividerColor: const Color(0xFF222222),
+    splashColor: const Color(0xFF00FFF7).withOpacity(0.14),
+    highlightColor: const Color(0xFF00FFF7).withOpacity(0.10),
+    hoverColor: const Color(0xFF00FFF7).withOpacity(0.10),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    materialTapTargetSize: MaterialTapTargetSize.padded,
+  );
+}
+
+void main() {
+  runApp(const AppRoot());
+}
+
+class AppRoot extends StatelessWidget {
+  const AppRoot({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ThemeController();
+  }
+}
+
+class ThemeController extends StatefulWidget {
+  const ThemeController({super.key});
+
+  @override
+  State<ThemeController> createState() => _ThemeControllerState();
+}
+
+class _ThemeControllerState extends State<ThemeController> {
+  AppTheme _currentTheme = AppTheme.classicDark;
+  double _textScale = 1.0;
+  bool _showSplash = true;
+  bool _showOnboarding = false;
+  bool _isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFirstRun();
+  }
+
+  Future<void> _checkFirstRun() async {
+    final prefs = await SharedPreferences.getInstance();
+    final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+    final loggedIn = prefs.getBool('isLoggedIn') ?? false;
+    setState(() {
+      _showOnboarding = !seenOnboarding;
+      _isLoggedIn = loggedIn;
+      _showSplash = !loggedIn;
+    });
+  }
+
+  void _updateTheme(AppTheme theme) {
+    setState(() {
+      _currentTheme = theme;
+    });
+  }
+
+  void _updateTextScale(double scale) {
+    setState(() {
+      _textScale = scale;
+    });
+  }
+
+  void _hideSplash() {
+    setState(() {
+      _showSplash = false;
+      if (_showOnboarding) {
+        // Show onboarding after splash
+        _showOnboarding = true;
+      }
+    });
+  }
+
+  void _finishOnboarding({bool login = false}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('seenOnboarding', true);
+    if (login) await prefs.setBool('isLoggedIn', true);
+    setState(() {
+      _showOnboarding = false;
+      _isLoggedIn = login;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: _textScale),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Cassandra',
+        theme: getThemeData(_currentTheme),
+        home:
+            _isLoggedIn
+                ? MainScaffold(
+                  currentTheme: _currentTheme,
+                  onThemeChanged: _updateTheme,
+                )
+                : _showSplash
+                ? NeonSplashScreen(onContinue: _hideSplash)
+                : _showOnboarding
+                ? OnboardingScreen(
+                  onFinish: () => _finishOnboarding(login: true),
+                  onGuest: () => _finishOnboarding(login: false),
+                )
+                : MainScaffold(
+                  currentTheme: _currentTheme,
+                  onThemeChanged: _updateTheme,
+                ),
+      ),
+    );
+  }
+}
+
+class MainScaffold extends StatefulWidget {
+  final AppTheme currentTheme;
+  final ValueChanged<AppTheme> onThemeChanged;
+  const MainScaffold({
+    super.key,
+    required this.currentTheme,
+    required this.onThemeChanged,
+  });
+
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    FeedPage(),
+    Placeholder(), // NotificationsPage
+    ProfilePage(),
+  ];
+
+  void _onTabTapped(int index) {
+    if (index == 1) {
+      // Live button opens Live modal
+      showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (context) => const LiveModal(),
+      );
+      return;
+    }
+    setState(() {
+      _selectedIndex = index == 1 ? _selectedIndex : index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface.withOpacity(0.92),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: Theme.of(
+            context,
+          ).colorScheme.onSurface.withOpacity(0.5),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex:
+              _selectedIndex > 1 ? _selectedIndex - 1 : _selectedIndex,
+          onTap: _onTabTapped,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.home, semanticLabel: 'Home'),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.live_tv, size: 28, semanticLabel: 'Live'),
+              label: '',
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.person, semanticLabel: 'Profile'),
+              label: '',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FeedPage extends StatelessWidget {
+  const FeedPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Feed')),
+      body: ListView.builder(
+        itemCount: 10, // Example count
+        itemBuilder: (context, index) {
+          return PredictionCard(
+            title: 'Prediction ${index + 1}',
+            timeLeft: '2h left',
+            amount: '100',
+            onStakeYes: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const StakeModal(stakeOn: 'YES'),
+              );
+            },
+            onStakeNo: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const StakeModal(stakeOn: 'NO'),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Placeholder extends StatelessWidget {
+  const Placeholder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Placeholder')),
+      body: const Center(child: Text('This is a placeholder page.')),
+    );
+  }
+}
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  int selectedTab = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        elevation: theme.appBarTheme.elevation ?? 0,
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            // Remove small avatar here, move to header below
+            // UserAvatar(name: '@yourname', radius: 16),
+            // const SizedBox(width: 8),
+            Text(
+              'Profile',
+              style:
+                  theme.appBarTheme.titleTextStyle ??
+                  theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color:
+                  theme.appBarTheme.iconTheme?.color ?? theme.iconTheme.color,
+              size: 20,
+              semanticLabel: 'Settings',
+            ),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SettingsPage()));
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        children: [
+          // Glassy profile header
+          Container(
+            margin: const EdgeInsets.only(bottom: 18),
+            padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 18),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  theme.colorScheme.primary.withOpacity(0.18),
+                  theme.colorScheme.secondary.withOpacity(0.12),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: theme.colorScheme.primary.withOpacity(0.08),
+                  blurRadius: 12,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 92,
+                      height: 92,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            theme.colorScheme.primary.withOpacity(0.7),
+                            theme.colorScheme.tertiary.withOpacity(0.7),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.colorScheme.primary.withOpacity(0.12),
+                            blurRadius: 16,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                    UserAvatar(name: '@yourname', radius: 42),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  'Your Name',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '@yourname',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.secondary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Web3 enthusiast. Predicting the future, one stake at a time.',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 14),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _ProfileStat(
+                      icon: Icons.show_chart,
+                      label: 'Predictions',
+                      value: '24',
+                      color: theme.colorScheme.primary,
+                    ),
+                    _ProfileStat(
+                      icon: Icons.people,
+                      label: 'Followers',
+                      value: '1.2k',
+                      color: theme.colorScheme.secondary,
+                    ),
+                    _ProfileStat(
+                      icon: Icons.person_add_alt_1,
+                      label: 'Following',
+                      value: '180',
+                      color: theme.colorScheme.tertiary,
+                    ),
+                    _ProfileStat(
+                      icon: Icons.emoji_events,
+                      label: 'Win Rate',
+                      value: '68%',
+                      color: theme.colorScheme.primary,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                SizedBox(
+                  width: 140,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: theme.colorScheme.tertiary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      elevation: 6,
+                      shadowColor: theme.colorScheme.tertiary.withOpacity(0.18),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      textStyle: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text('Edit Profile'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Glassy, pill-shaped tab bar
+          Container(
+            margin: const EdgeInsets.only(bottom: 14),
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: theme.colorScheme.primary.withOpacity(0.06),
+                  blurRadius: 8,
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _ProfileTab(
+                  label: 'Active',
+                  selected: selectedTab == 0,
+                  onTap: () => setState(() => selectedTab = 0),
+                  icon: Icons.flash_on,
+                  color: theme.colorScheme.primary,
+                ),
+                _ProfileTab(
+                  label: 'History',
+                  selected: selectedTab == 1,
+                  onTap: () => setState(() => selectedTab = 1),
+                  icon: Icons.history,
+                  color: theme.colorScheme.secondary,
+                ),
+                _ProfileTab(
+                  label: 'Likes',
+                  selected: selectedTab == 2,
+                  onTap: () => setState(() => selectedTab = 2),
+                  icon: Icons.favorite,
+                  color: theme.colorScheme.tertiary,
+                ),
+              ],
+            ),
+          ),
+
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 400),
+            transitionBuilder:
+                (child, anim) => FadeTransition(opacity: anim, child: child),
+            child: _buildProfileTabContent(selectedTab, theme),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileTabContent(int tab, ThemeData theme) {
+    if (tab == 0) {
+      // Active predictions (demo data)
+      final activePredictions = [
+        {
+          'title': 'Solana will flip Ethereum in market cap by 2026',
+          'amount': '3,400',
+          'status': 'Ongoing',
+          'stake': 'YES',
+          'time': '12h left',
+        },
+        {
+          'title': 'BTC to \$80k by Sept 2025',
+          'amount': '5,200',
+          'status': 'Ongoing',
+          'stake': 'NO',
+          'time': '3d left',
+        },
+      ];
+      return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: activePredictions.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
+        itemBuilder: (context, i) {
+          final pred = activePredictions[i];
+          return GestureDetector(
+            onTap: () {},
+            child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.primary.withOpacity(0.13),
+                        theme.colorScheme.secondary.withOpacity(0.10),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withOpacity(0.06),
+                        blurRadius: 7,
+                      ),
+                    ],
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withOpacity(0.08),
+                      width: 0.8,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary.withOpacity(0.13),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.show_chart,
+                          color: theme.colorScheme.primary,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              (pred['title'] as String?) ?? '',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.tertiary
+                                        .withOpacity(0.13),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['stake'] as String?) ?? '',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.tertiary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Icon(
+                                  Icons.access_time,
+                                  color: theme.colorScheme.secondary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  (pred['time'] as String?) ?? '',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.secondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.attach_money,
+                                  color: theme.colorScheme.primary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  (pred['amount'] as String?) ?? '',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.primary
+                                        .withOpacity(0.10),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['status'] as String?) ?? 'Ongoing',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                .animate()
+                .fadeIn(duration: 300.ms)
+                .scale(delay: (i * 80).ms, duration: 300.ms),
+          );
+        },
+      );
+    }
+    if (tab == 1) {
+      // History tab: resolved/expired predictions
+      final historyPredictions = [
+        {
+          'title': 'ETH will reach \$10k by 2027',
+          'amount': '2,100',
+          'outcome': 'Won',
+          'stake': 'YES',
+          'time': 'Ended 2d ago',
+        },
+        {
+          'title': 'Dogecoin to \$1 by 2025',
+          'amount': '900',
+          'outcome': 'Lost',
+          'stake': 'NO',
+          'time': 'Ended 5d ago',
+        },
+      ];
+      if (historyPredictions.isEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.history,
+                size: 48,
+                color: theme.colorScheme.primary.withOpacity(0.18),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'No history yet',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+      return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: historyPredictions.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
+        itemBuilder: (context, i) {
+          final pred = historyPredictions[i];
+          final isWon = pred['outcome'] == 'Won';
+          return GestureDetector(
+            onTap: () {},
+            child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        isWon
+                            ? theme.colorScheme.primary.withOpacity(0.13)
+                            : theme.colorScheme.secondary.withOpacity(0.10),
+                        theme.colorScheme.surface.withOpacity(0.10),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: (isWon
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.secondary)
+                            .withOpacity(0.08),
+                        blurRadius: 14,
+                      ),
+                    ],
+                    border: Border.all(
+                      color: (isWon
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.secondary)
+                          .withOpacity(0.10),
+                      width: 0.8,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: (isWon
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.secondary)
+                              .withOpacity(0.13),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          isWon ? Icons.emoji_events : Icons.close,
+                          color:
+                              isWon
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.secondary,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              (pred['title'] as String?) ?? '',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.tertiary
+                                        .withOpacity(0.13),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['stake'] as String?) ?? '',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.tertiary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Icon(
+                                  Icons.access_time,
+                                  color: theme.colorScheme.secondary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  (pred['time'] as String?) ?? '',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.secondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.attach_money,
+                                  color: theme.colorScheme.primary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  (pred['amount'] as String?) ?? '',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        isWon
+                                            ? theme.colorScheme.primary
+                                                .withOpacity(0.10)
+                                            : theme.colorScheme.secondary
+                                                .withOpacity(0.10),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['outcome'] as String?) ?? '',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color:
+                                          isWon
+                                              ? theme.colorScheme.primary
+                                              : theme.colorScheme.secondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.visibility,
+                                    color: theme.colorScheme.primary,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {},
+                                  tooltip: 'View Details',
+                                  splashRadius: 22,
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.share,
+                                    color: theme.colorScheme.secondary,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {},
+                                  tooltip: 'Share',
+                                  splashRadius: 22,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                .animate()
+                .fadeIn(duration: 300.ms)
+                .scale(delay: (i * 80).ms, duration: 300.ms),
+          );
+        },
+      );
+    }
+    if (tab == 2) {
+      // Likes tab: liked predictions
+      final likedPredictions = [
+        {
+          'title': 'AI will pass Turing Test by 2030',
+          'amount': '1,800',
+          'status': 'Ongoing',
+          'stake': 'YES',
+          'time': '7d left',
+          'liked': true,
+        },
+        {
+          'title': 'OpenAI will IPO by 2026',
+          'amount': '4,000',
+          'status': 'Ongoing',
+          'stake': 'NO',
+          'time': '1d left',
+          'liked': true,
+        },
+      ];
+      if (likedPredictions.isEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.favorite,
+                size: 48,
+                color: theme.colorScheme.tertiary.withOpacity(0.18),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'No liked predictions yet',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+      return ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: likedPredictions.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
+        itemBuilder: (context, i) {
+          final pred = likedPredictions[i];
+          bool liked = pred['liked'] as bool;
+          return GestureDetector(
+            onTap: () {},
+            child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeOut,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.tertiary.withOpacity(0.13),
+                        theme.colorScheme.surface.withOpacity(0.10),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.tertiary.withOpacity(0.08),
+                        blurRadius: 14,
+                      ),
+                    ],
+                    border: Border.all(
+                      color: theme.colorScheme.tertiary.withOpacity(0.10),
+                      width: 0.8,
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.tertiary.withOpacity(0.13),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.favorite,
+                          color: theme.colorScheme.tertiary,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              (pred['title'] as String?) ?? '',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.tertiary
+                                        .withOpacity(0.13),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['stake'] as String?) ?? '',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.tertiary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Icon(
+                                  Icons.access_time,
+                                  color: theme.colorScheme.secondary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  (pred['time'] as String?) ?? '',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.secondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.attach_money,
+                                  color: theme.colorScheme.primary,
+                                  size: 12,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  pred['amount'] as String,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.tertiary
+                                        .withOpacity(0.10),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    (pred['status'] ?? 'Ongoing') as String,
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.tertiary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                IconButton(
+                                  icon: AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 300),
+                                    transitionBuilder:
+                                        (child, anim) => ScaleTransition(
+                                          scale: anim,
+                                          child: child,
+                                        ),
+                                    child:
+                                        liked
+                                            ? Icon(
+                                              Icons.favorite,
+                                              key: ValueKey(true),
+                                              color: theme.colorScheme.tertiary,
+                                              size: 20,
+                                            )
+                                            : Icon(
+                                              Icons.favorite_border,
+                                              key: ValueKey(false),
+                                              color: theme.colorScheme.tertiary,
+                                              size: 20,
+                                            ),
+                                  ),
+                                  onPressed: () {
+                                    // Animate like/unlike (in real app, update state)
+                                  },
+                                  tooltip: liked ? 'Unlike' : 'Like',
+                                  splashRadius: 22,
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.visibility,
+                                    color: theme.colorScheme.primary,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {},
+                                  tooltip: 'View Details',
+                                  splashRadius: 22,
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.share,
+                                    color: theme.colorScheme.secondary,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {},
+                                  tooltip: 'Share',
+                                  splashRadius: 22,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                .animate()
+                .fadeIn(duration: 300.ms)
+                .scale(delay: (i * 80).ms, duration: 300.ms),
+          );
+        },
+      );
+    }
+    return const SizedBox.shrink();
+  }
+}
+
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool notificationsEnabled = true;
+  double textScale = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Settings')),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+        children: [
+          Text('General', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          SwitchListTile.adaptive(
+            title: const Text(
+              'Enable Notifications',
+              semanticsLabel: 'Enable Notifications',
+            ),
+            value: notificationsEnabled,
+            onChanged: (val) => setState(() => notificationsEnabled = val),
+            secondary: const Icon(
+              Icons.notifications_active,
+              semanticLabel: 'Notifications Icon',
+            ),
+            contentPadding: EdgeInsets.zero,
+          ),
+          const Divider(height: 32),
+          Text('Accessibility', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          ListTile(
+            title: const Text('Text Size', semanticsLabel: 'Text Size'),
+            subtitle: Slider(
+              value: textScale,
+              min: 0.8,
+              max: 1.5,
+              divisions: 7,
+              label: '${(textScale * 100).toInt()}%',
+              onChanged: (val) => setState(() => textScale = val),
+              semanticFormatterCallback:
+                  (val) => '${(val * 100).toInt()} percent',
+            ),
+            leading: const Icon(
+              Icons.text_fields,
+              semanticLabel: 'Text Size Icon',
+            ),
+            contentPadding: EdgeInsets.zero,
+          ),
+          const Divider(height: 32),
+          Text('Account', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          ListTile(
+            leading: const Icon(Icons.person, semanticLabel: 'Account Icon'),
+            title: const Text('Account Info', semanticsLabel: 'Account Info'),
+            subtitle: const Text('Username: @yourname'),
+            contentPadding: EdgeInsets.zero,
+            onTap: () {},
+          ),
+          const Divider(height: 32),
+          Text('About', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 12),
+          ListTile(
+            leading: const Icon(
+              Icons.info_outline,
+              semanticLabel: 'About Icon',
+            ),
+            title: const Text(
+              'About This App',
+              semanticsLabel: 'About This App',
+            ),
+            subtitle: const Text('Cassandra v1.0.0'),
+            contentPadding: EdgeInsets.zero,
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AnimatedTap extends StatefulWidget {
+  final Widget child;
+  final VoidCallback? onTap;
+  const AnimatedTap({required this.child, this.onTap, super.key});
+  @override
+  State<AnimatedTap> createState() => _AnimatedTapState();
+}
+
+class _AnimatedTapState extends State<AnimatedTap>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scale;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 80),
+      lowerBound: 0.95,
+      upperBound: 1.0,
+    );
+    _scale = _controller.drive(Tween(begin: 1.0, end: 0.95));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onTapDown(TapDownDetails _) => _controller.reverse();
+  void _onTapUp([_]) => _controller.forward();
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      child: ScaleTransition(scale: _scale, child: widget.child),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  final VoidCallback onContinue;
+  const SplashScreen({required this.onContinue, super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnim;
+  late AnimationController _bgController;
+  late Animation<double> _gradientAnim;
+  bool _showTooltip = false;
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+    _scaleAnim = Tween<double>(
+      begin: 0.92,
+      end: 1.08,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _bgController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 6),
+    )..repeat(reverse: true);
+    _gradientAnim = Tween<double>(begin: 0, end: 1).animate(_bgController);
+    // Tooltip after 10s
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) setState(() => _showTooltip = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _bgController.dispose();
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isSmallScreen = MediaQuery.of(context).size.width < 420;
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: Stack(
+        children: [
+          // Animated gradient background
+          AnimatedBuilder(
+            animation: _gradientAnim,
+            builder: (context, child) {
+              return CustomPaint(
+                size: MediaQuery.of(context).size,
+                painter: _AnimatedGradientPainter(_gradientAnim.value),
+              );
+            },
+          ),
+          // Particle shimmer
+          Positioned.fill(
+            child: IgnorePointer(
+              child: AnimatedBuilder(
+                animation: _bgController,
+                builder:
+                    (context, child) => CustomPaint(
+                      painter: _ParticlePainter(_bgController.value),
+                    ),
+              ),
+            ),
+          ),
+          // Main content
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ScaleTransition(
+                  scale: _scaleAnim,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.colorScheme.primary,
+                          theme.colorScheme.secondary,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorScheme.primary.withOpacity(0.12),
+                          blurRadius: 16,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.auto_awesome,
+                        size: 56,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                // 3. Typewriter effect for app name
+                _TypewriterText(
+                  text: 'Cassandra',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                  duration: const Duration(milliseconds: 1200),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Predict the Future',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.secondary,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 48),
+                isSmallScreen
+                    ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _GlassButton(
+                          text: 'Get Started',
+                          onPressed: () async {
+                            HapticFeedback.lightImpact();
+                            await _audioPlayer.play(
+                              AssetSource('sounds/chime.mp3'),
+                            );
+                            widget.onContinue();
+                          },
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(height: 18),
+                        _GlassButton(
+                          text: 'Continue as Guest',
+                          onPressed: () async {
+                            HapticFeedback.lightImpact();
+                            await _audioPlayer.play(
+                              AssetSource('sounds/chime.mp3'),
+                            );
+                            widget.onContinue();
+                          },
+                          color: theme.colorScheme.secondary,
+                        ),
+                      ],
+                    )
+                    : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _GlassButton(
+                          text: 'Get Started',
+                          onPressed: () async {
+                            HapticFeedback.lightImpact();
+                            await _audioPlayer.play(
+                              AssetSource('sounds/chime.mp3'),
+                            );
+                            widget.onContinue();
+                          },
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(width: 18),
+                        _GlassButton(
+                          text: 'Continue as Guest',
+                          onPressed: () async {
+                            HapticFeedback.lightImpact();
+                            await _audioPlayer.play(
+                              AssetSource('sounds/chime.mp3'),
+                            );
+                            widget.onContinue();
+                          },
+                          color: theme.colorScheme.secondary,
+                        ),
+                      ],
+                    ),
+              ],
+            ),
+          ),
+          // 5. Timeout tooltip
+          if (_showTooltip)
+            Positioned(
+              bottom: 80,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withOpacity(0.18),
+                        blurRadius: 16,
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    'Dive into predictions shaping the future → Tap Get Started',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// Animated gradient painter
+class _AnimatedGradientPainter extends CustomPainter {
+  final double t;
+  _AnimatedGradientPainter(this.t);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    final gradient = LinearGradient(
+      colors: [
+        Color.lerp(const Color(0xFF8C52FF), const Color(0xFFFF2DCA), t)!,
+        Color.lerp(const Color(0xFF00E5FF), const Color(0xFF8C52FF), t)!,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+    canvas.drawRect(rect, Paint()..shader = gradient.createShader(rect));
+  }
+
+  @override
+  bool shouldRepaint(covariant _AnimatedGradientPainter old) => old.t != t;
+}
+
+// Particle shimmer painter
+class _ParticlePainter extends CustomPainter {
+  final double t;
+  _ParticlePainter(this.t);
+  final int count = 18;
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rnd = Random(42);
+    for (int i = 0; i < count; i++) {
+      final x = rnd.nextDouble() * size.width;
+      final y = (size.height * (1 - ((t + i / count) % 1.0)));
+      final radius = 1.5 + rnd.nextDouble() * 2.5;
+      final color = [
+        const Color(0xFF8C52FF),
+        const Color(0xFFFF2DCA),
+        const Color(0xFF00E5FF),
+      ][i % 3].withOpacity(0.18 + 0.18 * rnd.nextDouble());
+      canvas.drawCircle(Offset(x, y), radius, Paint()..color = color);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _ParticlePainter old) => old.t != t;
+}
+
+// Typewriter text widget
+class _TypewriterText extends StatefulWidget {
+  final String text;
+  final TextStyle? style;
+  final Duration duration;
+  const _TypewriterText({
+    required this.text,
+    this.style,
+    this.duration = const Duration(milliseconds: 1200),
+    super.key,
+  });
+  @override
+  State<_TypewriterText> createState() => _TypewriterTextState();
+}
+
+class _TypewriterTextState extends State<_TypewriterText>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final count =
+            (widget.text.length * _controller.value)
+                .clamp(0, widget.text.length)
+                .toInt();
+        return Text(widget.text.substring(0, count), style: widget.style);
+      },
+    );
+  }
+}
+
+// Glassmorphism button
+class _GlassButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Color color;
+  const _GlassButton({
+    required this.text,
+    required this.onPressed,
+    required this.color,
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 28),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.18),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: color.withOpacity(0.5), width: 1.8),
+          boxShadow: [
+            BoxShadow(
+              color: color.withOpacity(0.25),
+              blurRadius: 16,
+              spreadRadius: 1,
+            ),
+          ],
+          backgroundBlendMode: BlendMode.screen,
+        ),
+        child: Text(
+          text,
+          style: GoogleFonts.sora(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            letterSpacing: 1.1,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OnboardingScreen extends StatefulWidget {
+  final VoidCallback onFinish;
+  final VoidCallback onGuest;
+  const OnboardingScreen({
+    required this.onFinish,
+    required this.onGuest,
+    super.key,
+  });
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _controller = PageController();
+  int _page = 0;
+  final List<_OnboardingPageData> _pages = [
+    _OnboardingPageData(
+      icon: Icons.swipe_vertical_rounded,
+      title: 'Swipe to Explore',
+      desc: 'Swipe up and down to discover predictions from the community.',
+      color: Color(0xFF8C52FF),
+    ),
+    _OnboardingPageData(
+      icon: Icons.add_box_rounded,
+      title: 'Create Predictions',
+      desc: 'Tap the + to create your own prediction and share your vision.',
+      color: Color(0xFFFF2DCA),
+    ),
+    _OnboardingPageData(
+      icon: Icons.stacked_line_chart,
+      title: 'Stake & Earn',
+      desc: 'Stake on outcomes and earn rewards for accurate predictions.',
+      color: Color(0xFF00E5FF),
+    ),
+    _OnboardingPageData(
+      icon: Icons.favorite_rounded,
+      title: 'Engage & Connect',
+      desc: 'Like, comment, and share your favorite predictions.',
+      color: Color(0xFF8C52FF),
+    ),
+  ];
+
+  void _next() {
+    if (_page < _pages.length - 1) {
+      _controller.nextPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PageView.builder(
+              controller: _controller,
+              itemCount: _pages.length,
+              onPageChanged: (i) => setState(() => _page = i),
+              itemBuilder: (context, i) {
+                final data = _pages[i];
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: data.color.withOpacity(0.12),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: data.color.withOpacity(0.12),
+                            blurRadius: 16,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        data.icon,
+                        size: 64,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      data.title,
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Text(
+                        data.desc,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: Colors.white70,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            // Skip button
+            Positioned(
+              top: 16,
+              right: 16,
+              child: TextButton(
+                onPressed: widget.onGuest,
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ),
+            ),
+            // Dots and CTA
+            Positioned(
+              bottom: 48,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      _pages.length,
+                      (i) => AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: _page == i ? 18 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _page == i ? _pages[i].color : Colors.white24,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  if (_page == _pages.length - 1)
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final isSmallScreen = constraints.maxWidth < 400;
+                        return isSmallScreen
+                            ? Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _GlassButton(
+                                  text: 'Get Started',
+                                  onPressed: widget.onFinish,
+                                  color: theme.colorScheme.primary,
+                                ),
+                                const SizedBox(height: 18),
+                                _GlassButton(
+                                  text: 'Continue as Guest',
+                                  onPressed: widget.onGuest,
+                                  color: theme.colorScheme.secondary,
+                                ),
+                              ],
+                            )
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _GlassButton(
+                                  text: 'Get Started',
+                                  onPressed: widget.onFinish,
+                                  color: theme.colorScheme.primary,
+                                ),
+                                const SizedBox(width: 18),
+                                _GlassButton(
+                                  text: 'Continue as Guest',
+                                  onPressed: widget.onGuest,
+                                  color: theme.colorScheme.secondary,
+                                ),
+                              ],
+                            );
+                      },
+                    )
+                  else
+                    ElevatedButton(
+                      onPressed: _next,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _pages[_page].color,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 36,
+                          vertical: 14,
+                        ),
+                      ),
+                      child: const Text('Next'),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _OnboardingPageData {
+  final IconData icon;
+  final String title;
+  final String desc;
+  final Color color;
+  const _OnboardingPageData({
+    required this.icon,
+    required this.title,
+    required this.desc,
+    required this.color,
+  });
+}
+
+// Add this widget inside the ProfilePage file, after _ProfilePageState
+class _ProfileStat extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+  const _ProfileStat({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.13),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(color: color.withOpacity(0.12), blurRadius: 6),
+              ],
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: color.withOpacity(0.7),
+              fontWeight: FontWeight.w600,
+              fontSize: 11,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Add this widget after _ProfileStat
+class _ProfileTab extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+  final IconData icon;
+  final Color color;
+  const _ProfileTab({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    required this.icon,
+    required this.color,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: selected ? color.withOpacity(0.18) : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
+            boxShadow:
+                selected
+                    ? [BoxShadow(color: color.withOpacity(0.12), blurRadius: 8)]
+                    : [],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: selected ? color : color.withOpacity(0.5),
+                size: 18,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: selected ? color : color.withOpacity(0.7),
+                  fontWeight: selected ? FontWeight.bold : FontWeight.w500,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NotificationsModal extends StatelessWidget {
+  const NotificationsModal({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final borderRadius = BorderRadius.vertical(top: Radius.circular(22));
+    final neonGradient = LinearGradient(
+      colors: [
+        theme.colorScheme.primary.withOpacity(0.7),
+        theme.colorScheme.secondary.withOpacity(0.7),
+        theme.colorScheme.tertiary.withOpacity(0.7),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
+      decoration: BoxDecoration(
+        gradient: neonGradient,
+        borderRadius: borderRadius,
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.tertiary.withOpacity(0.15),
+            blurRadius: 20,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+          child: Container(
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface.withOpacity(0.72),
+              borderRadius: borderRadius,
+              border: Border.all(
+                width: 2.5,
+                color: Colors.white.withOpacity(0.08),
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 14, bottom: 8),
+                  width: 48,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.tertiary.withOpacity(0.35),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.tertiary.withOpacity(0.18),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Notifications',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20,
+                          color: theme.colorScheme.onSurface,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: theme.colorScheme.onSurface.withOpacity(0.5),
+                          size: 22,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(color: theme.dividerColor, height: 1, thickness: 1),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'You have no notifications yet!',
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.secondary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
