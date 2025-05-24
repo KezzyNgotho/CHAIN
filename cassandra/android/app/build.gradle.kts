@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.cassandra.app"
+    namespace = "com.example.cassandra"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "21.4.7075529"
 
@@ -21,29 +21,20 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.cassandra.app"
+        applicationId = "com.example.cassandra"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-
-    signingConfigs {
-        create("release") {
-            storeFile = file("cassandra.keystore")
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "cassandra123"
-            keyAlias = System.getenv("KEY_ALIAS") ?: "cassandra"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: "cassandra123"
-        }
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

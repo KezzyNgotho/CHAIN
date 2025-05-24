@@ -58,24 +58,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
                   Card(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                           const Text(
                             'Wallet Address',
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
                           const SizedBox(height: 8),
-                          Text(
+                        Text(
                             userAddress ?? 'Not connected',
                             style: const TextStyle(
                               color: Colors.grey,
@@ -157,11 +157,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         );
-                      },
-                    ),
-                ],
+                },
               ),
-            ),
+            ],
+        ),
+      ),
     );
   }
-}
+} 
