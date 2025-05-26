@@ -63,14 +63,14 @@ class _MarketListScreenState extends State<MarketListScreen> {
           : markets.isEmpty
               ? const Center(child: Text('No markets available'))
               : ListView.builder(
+                  padding: EdgeInsets.zero,
                   itemCount: markets.length,
                   itemBuilder: (context, index) {
                     final market = markets[index];
                     return Card(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       child: ListTile(
                         title: Text(market['question']),
                         subtitle: Text(

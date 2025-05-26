@@ -50,26 +50,26 @@ class _NeonSplashScreenState extends State<NeonSplashScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: const Color(0xFF0A0A12),
       body: Stack(
         children: [
-          // Animated neon gradient background
+          // Animated gradient background
           AnimatedBuilder(
             animation: _gradientAnim,
             builder: (context, child) {
               return CustomPaint(
                 size: MediaQuery.of(context).size,
-                painter: _NeonGradientPainter(_gradientAnim.value),
+                painter: _GradientPainter(_gradientAnim.value),
               );
             },
           ),
-          // Particle shimmer
+          // Subtle particle effect
           Positioned.fill(
             child: IgnorePointer(
               child: AnimatedBuilder(
                 animation: _bgController,
                 builder: (context, child) => CustomPaint(
-                  painter: _NeonParticlePainter(_bgController.value),
+                  painter: _ParticlePainter(_bgController.value),
                 ),
               ),
             ),
@@ -79,71 +79,78 @@ class _NeonSplashScreenState extends State<NeonSplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ScaleTransition(
-                  scale: _logoScaleAnim,
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.primary.withOpacity(0.9),
+                        theme.colorScheme.secondary.withOpacity(0.9),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withOpacity(0.2),
+                        blurRadius: 15,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
                   child: Container(
-                    width: 110,
-                    height: 110,
+                    width: 80,
+                    height: 80,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
                         colors: [
-                          theme.colorScheme.primary,
-                          theme.colorScheme.tertiary,
+                          theme.colorScheme.primary.withOpacity(0.8),
+                          theme.colorScheme.secondary.withOpacity(0.8),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: theme.colorScheme.primary.withOpacity(0.22),
-                          blurRadius: 32,
-                          spreadRadius: 2,
-                        ),
-                      ],
                     ),
-                    child: ClipOval(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                        child: Center(
-                          child: Icon(
-                            Icons.auto_awesome,
-                            size: 60,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                color: theme.colorScheme.tertiary.withOpacity(0.7),
-                                blurRadius: 18,
-                              ),
-                            ],
+                    child: Center(
+                      child: Icon(
+                        Icons.flash_on,
+                        size: 48,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: theme.colorScheme.tertiary.withOpacity(0.7),
+                            blurRadius: 12,
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 36),
+                const SizedBox(height: 24),
                 // Neon glowing app name
                 ShaderMask(
                   shaderCallback: (rect) => LinearGradient(
                     colors: [
-                      theme.colorScheme.primary,
-                      theme.colorScheme.tertiary,
-                      theme.colorScheme.secondary,
+                      const Color(0xFF6366F1), // Indigo
+                      const Color(0xFF3B82F6), // Blue
+                      const Color(0xFF2563EB), // Deep Blue
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ).createShader(rect),
                   child: Text(
                     'Cassandra',
-                    style: theme.textTheme.headlineLarge?.copyWith(
+                    style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.3,
+                      letterSpacing: 1.2,
                       color: Colors.white,
                       shadows: [
                         Shadow(
                           color: theme.colorScheme.tertiary.withOpacity(0.7),
-                          blurRadius: 18,
+                          blurRadius: 12,
                         ),
                       ],
                     ),
@@ -152,16 +159,16 @@ class _NeonSplashScreenState extends State<NeonSplashScreen>
                         duration: 1200.ms,
                       ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 Text(
                   'Predict the Future',
-                  style: theme.textTheme.bodyLarge?.copyWith(
+                  style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.secondary,
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 1.1,
+                    letterSpacing: 0.8,
                   ),
                 ).animate().fadeIn(duration: 800.ms, delay: 200.ms),
-                const SizedBox(height: 48),
+                const SizedBox(height: 32),
                 if (_showButton)
                   _NeonGlassButton(
                     text: 'Get Started',
@@ -178,31 +185,32 @@ class _NeonSplashScreenState extends State<NeonSplashScreen>
 }
 
 // Animated neon gradient painter
-class _NeonGradientPainter extends CustomPainter {
+class _GradientPainter extends CustomPainter {
   final double t;
-  _NeonGradientPainter(this.t);
+  _GradientPainter(this.t);
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final gradient = LinearGradient(
       colors: [
-        Color.lerp(const Color(0xFF9B5CFF), const Color(0xFFFF2DCA), t)!,
-        Color.lerp(const Color(0xFF00FFF7), const Color(0xFF9B5CFF), t)!,
+        Color.lerp(const Color(0xFF1A1A2E), const Color(0xFF16213E), t)!,
+        Color.lerp(const Color(0xFF1E2D51), const Color(0xFF1A1A2E), t)!,
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     );
-    canvas.drawRect(rect, Paint()..shader = gradient.createShader(rect));
+    final paint = Paint()..shader = gradient.createShader(rect);
+    canvas.drawRect(rect, paint);
   }
 
   @override
-  bool shouldRepaint(covariant _NeonGradientPainter old) => old.t != t;
+  bool shouldRepaint(covariant _GradientPainter old) => old.t != t;
 }
 
 // Particle shimmer painter
-class _NeonParticlePainter extends CustomPainter {
+class _ParticlePainter extends CustomPainter {
   final double t;
-  _NeonParticlePainter(this.t);
+  _ParticlePainter(this.t);
   final int count = 22;
   @override
   void paint(Canvas canvas, Size size) {
@@ -211,17 +219,13 @@ class _NeonParticlePainter extends CustomPainter {
       final x = rnd.nextDouble() * size.width;
       final y = (size.height * (1 - ((t + i / count) % 1.0)));
       final radius = 2.0 + rnd.nextDouble() * 3.0;
-      final color = [
-        const Color(0xFF9B5CFF),
-        const Color(0xFFFF2DCA),
-        const Color(0xFF00FFF7),
-      ][i % 3].withOpacity(0.18 + 0.18 * rnd.nextDouble());
+      final color = const Color(0xFF1E2D51).withOpacity(0.18 + 0.18 * rnd.nextDouble());
       canvas.drawCircle(Offset(x, y), radius, Paint()..color = color);
     }
   }
 
   @override
-  bool shouldRepaint(covariant _NeonParticlePainter old) => old.t != t;
+  bool shouldRepaint(covariant _ParticlePainter old) => old.t != t;
 }
 
 // Glassmorphism neon button

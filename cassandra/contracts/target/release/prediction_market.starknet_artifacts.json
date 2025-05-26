@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"4uhi724j3pdfs","package_name":"prediction_market","contract_name":"PredictionMarket","module_path":"prediction_market::PredictionMarket","artifacts":{"sierra":"prediction_market_PredictionMarket.contract_class.json","casm":"prediction_market_PredictionMarket.compiled_contract_class.json"}}]}
