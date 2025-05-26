@@ -81,19 +81,75 @@ Cassandra is a decentralized prediction market platform that enables users to:
 - Responsive UI
 - Dark theme with neon accents
 
-### Key Components
-- `screens/`
-  - `market_list_screen.dart`: Main market listing
-  - `market_details_screen.dart`: Individual market view
-  - `create_market_screen.dart`: Market creation
-  - `governance_screen.dart`: Governance interface
-  - `profile_screen.dart`: User profile
+## Project Structure
 
-- `widgets/`
-  - `feed_card.dart`: Market card component
-  - `neon_splash_screen.dart`: App entry point
-  - `prediction_card.dart`: Individual prediction display
-  - `stake_button.dart`: Staking interface
+### Frontend (lib/)
+
+#### Main Application
+- `main.dart`: Entry point of the application
+- `test_contract.dart`: Contract testing utilities
+
+#### Components
+- Core UI components and reusable widgets
+
+#### Constants
+- `user_avatars.dart`: User avatar constants and utilities
+
+#### Contracts
+- `contract_abi.dart`: Smart contract ABI definitions
+
+#### Models
+- Data models and entities
+
+#### Pages
+- Page-level components and layouts
+
+#### Providers
+- State management providers
+
+#### Screens
+- `market_list_screen.dart`: Main market listing
+- `market_details_screen.dart`: Individual market view
+- `create_market_screen.dart`: Market creation
+- `governance_screen.dart`: Governance interface
+- `profile_screen.dart`: User profile
+- `onboarding_screen.dart`: User onboarding flow
+- `login_screen.dart`: Authentication interface
+- `curation_screen.dart`: Content curation
+- `market_details_screen.dart`: Detailed market view
+
+#### Services
+- `wallet_service.dart`: Wallet integration and management
+
+#### Theme
+- `app_theme.dart`: Application theme and styling
+
+#### Widgets
+- `feed_card.dart`: Market card component
+- `neon_splash_screen.dart`: App entry point
+- `prediction_card.dart`: Individual prediction display
+- `stake_button.dart`: Staking interface
+- `base_layout.dart`: Base layout components
+- `user_avatar.dart`: User avatar display
+- `wallet_connect_button.dart`: Wallet connection interface
+
+### Smart Contracts
+
+#### Core Contracts
+- `market_factory.cairo`: Market creation and management
+- `market.cairo`: Individual market logic
+- `governance.cairo`: Community governance system
+- `token.cairo`: Token management and rewards
+
+#### Artifacts
+- Compiled contract artifacts and ABIs
+- Test contracts and utilities
+
+### Development Tools
+- Contract compilation scripts
+- Testing utilities
+- Deployment scripts
+- Configuration files
 
 ### State Management
 - Provider package for state management
@@ -101,12 +157,20 @@ Cassandra is a decentralized prediction market platform that enables users to:
 - Efficient data flow
 - Async operations handling
 - Error management
+- Wallet state management
+- Market state tracking
+- User session management
 
 ## Getting Started
 
 ### Prerequisites
-- Flutter SDK
-- Dart SDK
+- Flutter SDK (latest stable version)
+- Dart SDK (latest stable version)
+- Node.js (v18 or higher)
+- StarkNet local network
+- Git (latest version)
+- Cairo compiler (for smart contracts)
+- StarkNet Devnet (for local testing)
 - Node.js
 - StarkNet local network
 - Git
